@@ -57,7 +57,7 @@ def process_frame(frame):
                     (0, 255, 0),
                     -1
                 )
-        cv2.putText(frame, f"ID-{id}", (x1-15, y1), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0,0,255))
+        cv2.putText(frame, f"ID-{id}", (x1, y1), cv2.FONT_HERSHEY_PLAIN, 2, (0,0,255))
         cv2.addWeighted(overlay, alpha, frame, 1 - alpha, 0, frame)
         cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (0,255,0), 2)
 
