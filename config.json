@@ -1,0 +1,25 @@
+{
+    "bounding_box_color": "#00ff00",
+    "box_opacity": 0.05,
+    "data_type": {
+        "coco8": {
+            "classes": [0]
+        }
+    },
+    "detector": "yolov8s",
+    "detection_conf": 0.3,
+    "resize_factor": 0.75,
+    "tracker": {
+        "botsort": {
+            "frame_rate": 30,
+            "half": false,
+            "match_thresh": 0.8,
+            "new_track_thresh": 0.6,
+            "reid_weights": "osnet_x0_25_msmt17.pt",
+            "track_buffer": 30,
+            "track_high_thresh": 0.5,
+            "track_low_thresh": 0.1
+        },
+        "device": "cpu"
+    }
+}
