@@ -6,7 +6,8 @@
             "classes": [0]
         }
     },
-    "detector": "yolov8s",
+    "debug": false,
+    "detector": "yolov8s.pt",
     "detection_conf": 0.3,
     "resize_factor": 0.75,
     "tracker": {
@@ -21,5 +22,6 @@
             "track_low_thresh": 0.1
         },
         "device": "cpu"
-    }
+    },
+    "video_path": "P:\\Tracker\\Data\\Vid-1.mp4"
 }
