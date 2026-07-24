@@ -1,5 +1,4 @@
 import cv2
-from frame_processor import process_frame
 
 # Main function for starting the analytics process
 def main(VIDEO_PATH: str):
