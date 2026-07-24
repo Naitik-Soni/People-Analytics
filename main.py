@@ -23,7 +23,7 @@ def main():
 
         if config.get("debug"):
             cv2.imshow("Original Video", frame)
-            if cv2.waitKey(0) and 0xFF == ord("q"):
+            if cv2.waitKey(1) and 0xFF == ord("q"):
                 break
 
     video_capture.release()

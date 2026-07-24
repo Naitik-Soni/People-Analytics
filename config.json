@@ -9,6 +9,7 @@
     "debug": false,
     "detector": "yolov8s.pt",
     "detection_conf": 0.3,
+    "device": "cpu",
     "resize_factor": 0.75,
     "tracker": {
         "botsort": {
@@ -20,8 +21,7 @@
             "track_buffer": 30,
             "track_high_thresh": 0.5,
             "track_low_thresh": 0.1
-        },
-        "device": "cpu"
+        }       
     },
     "video_path": "P:\\Tracker\\Data\\Vid-1.mp4"
 }
