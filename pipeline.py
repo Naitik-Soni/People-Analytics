@@ -1,33 +1,17 @@
 from logger import logger
 
+from modules.preprocessor import *
+from modules.object_detector import YOLODetector
+from modules.object_tracker import BotSORTTracker
+
 class AnalysisPipeline:
     def __init__(self):
-        self._stages: dict = {}
+        self.__context_manager = {}
+        self.detector = YOLODetector()
+        self.tracker = BotSORTTracker()
         logger.info("Initialized Analysis pipeline...")
 
-    def add_stage(self, stage_name: str, stage: function):
-        try:
-            self._stages[stage_name] = stage
-            logger.debug("Added stage {} with stage_name {}", stage, stage_name)
-            return self
-        except Exception:
-            logger.exception("Exception in adding stage to pipeline stage={}", stage)
-            raise
 
-    def remove_stage(self, stage_name: str):
-        try:
-            self._stages.pop(stage_name)
-            logger.debug("Removed stage {}", stage_name)
-            return self
-        except Exception:
-            logger.exception("Exception in removing stage stage={}", stage_name)
-            raise
+    def process(self, frame):
 
-def dummy(a,b):
-    return a+b
-
-def dummy_yummy():
-    return "Hello"
-
-pipeline = AnalysisPipeline()
-pipeline.add_stage("preprocessing", dummy)
+        resize_frame = resize_frame(frame, 1)
