@@ -14,4 +14,13 @@ class AnalysisPipeline:
 
     def process(self, frame):
 
-        resize_frame = resize_frame(frame, 1)
+        resized_frame = resize_frame_rf(frame)
+        self.__context_manager["frame"] = resized_frame
+
+        detections = self.detector.detect(resized_frame)
+        self.__context_manager["detected_objects"] = detections
+
+        tracked = self.tracker.track(detections, resized_frame)
+        self.__context_manager["tracked_objects"] = tracked
+
+        return self.__context_manager

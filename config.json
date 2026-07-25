@@ -1,5 +1,5 @@
 {
-    "bounding_box_color": "#00ff00",
+    "bounding_box_color": [255,0,0],
     "box_opacity": 0.05,
     "data_type": {
         "coco8": {
@@ -9,8 +9,9 @@
     "debug": false,
     "detector": "yolov8s.pt",
     "detection_conf": 0.3,
-    "device": "cpu",
-    "resize_factor": 0.75,
+    "device": "cuda:0",
+    "frame_skip": 0,
+    "resize_factor": 0.7,
     "tracker": {
         "botsort": {
             "frame_rate": 30,
@@ -23,5 +24,5 @@
             "track_low_thresh": 0.1
         }       
     },
-    "video_path": "P:\\Tracker\\Data\\Vid-1.mp4"
+    "video_path": "P:\\Tracker\\Data\\People-1.mp4"
 }

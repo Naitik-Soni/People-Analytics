@@ -6,7 +6,7 @@ from config import config
 from logger import logger
 
 # Function used to resize the frame with specific height and width
-def resize_frame(frame: MatLike, new_size: tuple = (1024, 1024)) -> MatLike:
+def resize_frame_s(frame, new_size: tuple = (1024, 1024)) -> MatLike:
     try:
         logger.debug("Resizing frame to {}", new_size)
         return cv2.resize(frame, new_size, interpolation=cv2.INTER_LINEAR)
@@ -16,7 +16,7 @@ def resize_frame(frame: MatLike, new_size: tuple = (1024, 1024)) -> MatLike:
         raise
 
 # Function used to resize the frame with specific resize factor
-def resize_frame(frame: MatLike , resize_factor: float = config.get("resize_factor")):
+def resize_frame_rf(frame, resize_factor: float = config.get("resize_factor")):
     try:
         height, width = frame.shape[:2]
         new_height, new_width = int(height*resize_factor), int(width*resize_factor)

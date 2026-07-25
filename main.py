@@ -4,6 +4,8 @@ from config import config
 from logger import logger
 from pipeline import AnalysisPipeline
 
+from modules.visualizer import visualize
+
 
 # Main function for starting the analytics process
 def main():
@@ -29,15 +31,18 @@ def main():
 
         frame_counter += 1
 
-        if frame_counter % 2 == 0:
+        frame_skip = config.get("frame_skip")
+        if frame_counter %  (frame_skip+1) == 0 and frame_skip > 0:
             continue
 
-        pipeline.process(frame)
+        pipeline_context = pipeline.process(frame)
 
         if config.get("debug"):
             cv2.imshow("Original Video", frame)
-            if cv2.waitKey(1) and 0xFF == ord("q"):
-                break
+
+        if (cv2.waitKey(1) and 0xFF == ord("q")) or visualize(pipeline_context):
+            break
+
 
     video_capture.release()
     cv2.destroyAllWindows()
