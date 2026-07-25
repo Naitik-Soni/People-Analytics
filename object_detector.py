@@ -1,4 +1,3 @@
-import cv2
 import numpy as np
 from ultralytics import YOLO
 
@@ -17,6 +16,7 @@ class YOLODetector():
         self.confidence_thresh = confidence_thresh
         self.device = device
         self.classes = classes
+        logger.info("Yolo model {} loaded with config thresh={}, classes={}", model, confidence_thresh, classes)
 
     def detect(self, frame):
         try:
@@ -50,7 +50,7 @@ class YOLODetector():
         
         return predictions[0]
 
-
+# Uncomment below line for testing
 # IMG_PATH = r"image.png"
 # image = cv2.imread(IMG_PATH)
 
