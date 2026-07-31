@@ -1,22 +1,21 @@
+"""Object detector"""
 import numpy as np
 from ultralytics import YOLO
 
 from config import config
 from logger import logger
 
-class YOLODetector():
-    def __init__(
-            self,
-            model = config.get("detector"),
-            confidence_thresh: float = config.get("detection_conf"),
-            device = config.get("device"),
-            classes = config.get("data_type", "coco8", "classes")
-        ):
-        self.model = YOLO(model)
-        self.confidence_thresh = confidence_thresh
-        self.device = device
-        self.classes = classes
-        logger.info("Yolo model {} loaded with config thresh={}, classes={}", model, confidence_thresh, classes)
+class YOLODetector:
+    def __init__(self, model=None, confidence_thresh: float = None, device=None, classes=None):
+        self.model = YOLO(model or config.get("detector"))
+        self.confidence_thresh = confidence_thresh if confidence_thresh is not None else config.get("detection_conf")
+        self.device = device or config.get("device")
+        self.classes = classes if classes is not None else config.get("data_type", "coco8", "classes")
+
+        logger.info(
+            "Yolo model loaded with config thresh={}, classes={}",
+            self.confidence_thresh, self.classes
+        )
 
     def detect(self, frame):
         try:
@@ -32,7 +31,7 @@ class YOLODetector():
                 predicted_classes[:, None]
             ])
 
-            logger.debug("Number of objects detected for the frame ", len(detections))
+            logger.debug("Number of objects detected for the frame: {}", len(detections))
 
             return detections
         except Exception:
@@ -41,21 +40,10 @@ class YOLODetector():
 
     def _predict(self, frame):
         predictions = self.model.predict(
-                                frame,
-                                conf=self.confidence_thresh,
-                                device=self.device,
-                                verbose=False,
-                                classes=self.classes
-                            )
-        
+            frame,
+            conf=self.confidence_thresh,
+            device=self.device,
+            verbose=False,
+            classes=self.classes
+        )
         return predictions[0]
-
-# Uncomment below line for testing
-# IMG_PATH = r"image.png"
-# image = cv2.imread(IMG_PATH)
-
-# detector = YOLODetector()
-# detections = detector.detect(image)
-
-# print(detections)
-# print(type(detections))

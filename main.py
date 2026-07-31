@@ -7,7 +7,6 @@ from pipeline import AnalysisPipeline
 from modules.visualizer import visualize
 
 
-# Main function for starting the analytics process
 def main():
     video_path = config.get("video_path")
     video_capture = cv2.VideoCapture(video_path)
@@ -21,7 +20,7 @@ def main():
     if not is_video_available:
         logger.warning("Video not found on {}", video_path)
         return
-    
+
     while True:
         is_frame_available, frame = video_capture.read()
 
@@ -32,26 +31,24 @@ def main():
         frame_counter += 1
 
         frame_skip = config.get("frame_skip")
-        if frame_counter %  (frame_skip+1) == 0 and frame_skip > 0:
+        if frame_skip > 0 and (frame_counter - 1) % (frame_skip + 1) != 0:
             continue
 
-        pipeline_context = pipeline.process(frame)
+        try:
+            pipeline_context = pipeline.process(frame)
+        except Exception:
+            logger.exception("Frame {} failed to process, skipping", frame_counter)
+            continue
 
         if config.get("debug"):
             cv2.imshow("Original Video", frame)
 
-        if (cv2.waitKey(1) and 0xFF == ord("q")) or visualize(pipeline_context):
+        if visualize(pipeline_context):
             break
-
 
     video_capture.release()
     cv2.destroyAllWindows()
 
 
 if __name__ == "__main__":
-<<<<<<< HEAD
-    VIDEO_PATH = r"C:\Users\baps\Documents\Projects\Tracking\Production\Mall-surveillance\Data\Vid-3.mp4"
-    main(VIDEO_PATH)
-=======
     main()
->>>>>>> be8b5f6e1d4baaf69233476c1afe4eff83fc22c6
