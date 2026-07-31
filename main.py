@@ -27,5 +27,5 @@ def main(VIDEO_PATH: str):
 
 
 if __name__ == "__main__":
-    VIDEO_PATH = r"C:\Users\baps\Documents\Projects\Tracking\Production\Mall-surveillance\Data\Vid-1.mkv"
+    VIDEO_PATH = r"C:\Users\baps\Documents\Projects\Tracking\Production\Mall-surveillance\Data\Vid-3.mp4"
     main(VIDEO_PATH)

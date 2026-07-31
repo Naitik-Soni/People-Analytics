@@ -1,0 +1,32 @@
+{
+    "bounding_box_color": [255, 0, 0],
+    "box_opacity": 0.05,
+    "data_type": {
+        "coco8": {
+            "classes": [0]
+        }
+    },
+    "debug": false,
+    "detector": "yolov8s.pt",
+    "detection_conf": 0.3,
+    "device": "cuda:0",
+    "frame_skip": 0,
+    "resize_factor": 0.7,
+    "tracker": {
+        "botsort": {
+            "frame_rate": 30,
+            "half": false,
+            "match_thresh": 0.8,
+            "new_track_thresh": 0.6,
+            "reid_weights": "osnet_x0_25_msmt17.pt",
+            "track_buffer": 30,
+            "track_high_thresh": 0.5,
+            "track_low_thresh": 0.1
+        }
+    },
+    "counter": {
+        "line_start": [0, 360],
+        "line_end": [1024, 360]
+    },
+    "video_path": "P:\\Tracker\\Data\\People-Analytics\\video-1.mp4"
+}
