@@ -1,31 +1,57 @@
 import cv2
-from frame_processor import process_frame
+
+from config import config
+from logger import logger
+from pipeline import AnalysisPipeline
+
+from modules.visualizer import visualize
+
 
 # Main function for starting the analytics process
-def main(VIDEO_PATH: str):
-    video_capture = cv2.VideoCapture(VIDEO_PATH)
+def main():
+    video_path = config.get("video_path")
+    video_capture = cv2.VideoCapture(video_path)
 
-    fps = int(video_capture.get(5))
+    is_video_available = video_capture.isOpened()
 
-    is_frame_available, frame = video_capture.read()
+    frame_counter = 0
 
-    if not is_frame_available:
-        print("Video is not available")
+    pipeline = AnalysisPipeline()
+
+    if not is_video_available:
+        logger.warning("Video not found on {}", video_path)
         return
     
     while True:
         is_frame_available, frame = video_capture.read()
 
         if not is_frame_available:
-            print("Next frame not available")
+            logger.info("Next frame not found in the video={}", video_path)
             break
-        
-        process_frame(frame)
 
-    cv2.destroyAllWindows()
+        frame_counter += 1
+
+        frame_skip = config.get("frame_skip")
+        if frame_counter %  (frame_skip+1) == 0 and frame_skip > 0:
+            continue
+
+        pipeline_context = pipeline.process(frame)
+
+        if config.get("debug"):
+            cv2.imshow("Original Video", frame)
+
+        if (cv2.waitKey(1) and 0xFF == ord("q")) or visualize(pipeline_context):
+            break
+
+
     video_capture.release()
+    cv2.destroyAllWindows()
 
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     VIDEO_PATH = r"C:\Users\baps\Documents\Projects\Tracking\Production\Mall-surveillance\Data\Vid-3.mp4"
     main(VIDEO_PATH)
+=======
+    main()
+>>>>>>> be8b5f6e1d4baaf69233476c1afe4eff83fc22c6
